@@ -2,4 +2,5 @@
 # stoping apache
 rm -rf /var/www/html/*
 service httpd stop
+npm install
 
