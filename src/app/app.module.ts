@@ -1,50 +1,23 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http' ;
 
-// translate
-import {createTranslateLoader} from './app.translate.factory';
-import { HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-// modules
-import {SharedModule} from './shared/shared.module';
-import {CoreModule} from './core/core.module';
-import {AppRoutingModule} from './app-routing.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-
-// components
-import {AppComponent} from './app.component';
-
-// services
-import {MessageService} from './modal-message/message.service';
-
-// factories and configurations
-import {environment} from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent
   ],
+  entryComponents: [],
   imports: [
     BrowserModule,
-    CoreModule,
-    SharedModule,
     AppRoutingModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    ServiceWorkerModule.register('./ngsw-worker.js', {enabled: environment.production})
+    HttpClientModule,
   ],
-  providers: [
-    {provide: 'api.config', useValue: environment.apiConfig},
-    {provide: 'defaultLanguage', useValue: environment.defaultLanguage},
-    MessageService
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

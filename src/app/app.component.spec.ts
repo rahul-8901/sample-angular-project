@@ -1,51 +1,35 @@
-import {async, TestBed} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {BrowserModule} from '@angular/platform-browser';
-import {APP_BASE_HREF} from '@angular/common';
-import {StoreModule} from '@ngrx/store';
-import {RouterModule} from '@angular/router';
-import {EffectsModule} from '@ngrx/effects';
-import {SharedModule} from './shared/shared.module';
-import {CoreModule} from './core/core.module';
-import {MocksUtil} from './core/utilities/mocks.util';
-import {MessageService} from './modal-message/message.service';
-import {TranslateModule} from '@ngx-translate/core';
-import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
+import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        BrowserModule,
-        CoreModule,
-        SharedModule,
-        TranslateModule.forRoot(),
-        RouterModule.forRoot([]),
-        StoreModule,
-        EffectsModule,
-        ServiceWorkerModule.register('./ngsw-worker.js', {enabled: false})
+        RouterTestingModule
       ],
       declarations: [
         AppComponent
       ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'},
-        {provide: 'api.config', useValue: MocksUtil.createMockedApiConfig()},
-        {provide: 'defaultLanguage', useValue: 'en'},
-        MessageService,
-        SwUpdate
-      ]
     }).compileComponents();
   }));
-  it('should create the app', async(() => {
+
+  it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'app'`, async(() => {
+  });
+
+  it(`should have as title 'discogs-api-client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('discogs-api-client');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('.content span').textContent).toContain('discogs-api-client app is running!');
+  });
 });
